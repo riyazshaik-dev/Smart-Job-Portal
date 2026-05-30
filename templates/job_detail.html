@@ -1,0 +1,59 @@
+<!DOCTYPE html>
+<html>
+<head>
+<title>Job Details</title>
+
+<style>
+
+body{
+font-family: Arial;
+background:#f4f6f8;
+padding:40px;
+}
+
+.job-box{
+background:white;
+padding:30px;
+width:500px;
+margin:auto;
+border-radius:10px;
+box-shadow:0px 0px 10px rgba(0,0,0,0.1);
+}
+
+button{
+padding:10px 20px;
+background:#007bff;
+color:white;
+border:none;
+border-radius:6px;
+}
+
+</style>
+
+</head>
+
+<body>
+
+<div class="job-box">
+
+<h2>{{ job[1] }}</h2>
+
+<p><b>Company:</b> {{ job[2] }}</p>
+
+<p><b>Category:</b> {{ job[3] }}</p>
+
+<p><b>Description:</b></p>
+
+<p>{{ job[4] }}</p>
+
+<form action="/apply/{{ job[0] }}" method="POST" enctype="multipart/form-data">
+
+<input type="file" name="resume" required>
+
+<button type="submit">Apply Now 🚀</button>
+</form>
+
+</div>
+
+</body>
+</html>

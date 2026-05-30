@@ -1,0 +1,161 @@
+<!DOCTYPE html>
+<html>
+<head>
+<title>User Profile</title>
+
+<style>
+
+body{
+    font-family: Arial;
+    background:#f4f6f8;
+    margin:0;
+}
+
+/* Navbar */
+.navbar{
+    background:#333;
+    padding:15px;
+    text-align:center;
+}
+
+.navbar a{
+    color:white;
+    margin:15px;
+    text-decoration:none;
+    font-weight:bold;
+}
+
+/* Profile card */
+.profile-card{
+    width:550px;
+    margin:60px auto;
+    background:white;
+    padding:30px;
+    border-radius:12px;
+    box-shadow:0px 5px 20px rgba(0,0,0,0.1);
+    text-align:center;
+    transition:0.3s;
+}
+
+.profile-card:hover{
+    transform:translateY(-5px);
+}
+
+/* Profile image */
+.profile-img{
+    width:120px;
+    height:120px;
+    border-radius:50%;
+    object-fit:cover;
+    margin-bottom:15px;
+}
+
+/* Name */
+.profile-name{
+    font-size:26px;
+    font-weight:bold;
+}
+
+/* Email */
+.profile-email{
+    color:gray;
+    margin-bottom:20px;
+}
+
+/* Stats */
+.stats{
+    display:flex;
+    justify-content:space-around;
+    margin:20px 0;
+}
+
+.stat-box{
+    background:#f1f3f5;
+    padding:15px;
+    border-radius:8px;
+    width:120px;
+}
+
+.stat-box h3{
+    margin:0;
+    color:#007bff;
+}
+
+/* Info section */
+.info{
+    text-align:left;
+    margin-top:20px;
+}
+
+.info p{
+    margin:8px 0;
+}
+
+/* Button */
+.edit-btn{
+    margin-top:20px;
+    padding:10px 20px;
+    background:#007bff;
+    color:white;
+    border:none;
+    border-radius:6px;
+    cursor:pointer;
+}
+
+.edit-btn:hover{
+    background:#0056b3;
+}
+
+</style>
+
+</head>
+
+<body>
+
+<div class="navbar">
+<a href="/">Home</a>
+<a href="/jobs">Jobs</a>
+<a href="/dashboard">Dashboard</a>
+<a href="/profile">Profile</a>
+<a href="/logout">Logout</a>
+</div>
+
+<div class="profile-card">
+
+<!-- Profile Image -->
+<img src="https://robohash.org/{{ user[2] }}?size=150x150" class="profile-img">
+<!-- 🔥 STEP 4: Dynamic user data -->
+<div class="profile-name">{{ user[1] }}</div>
+<div class="profile-email">{{ user[2] }}</div>
+
+<!-- 🔥 Stats Section -->
+<div class="stats">
+
+<div class="stat-box">
+<h3>{{ total_applications }}</h3>
+<p>Applications</p>
+</div>
+
+<div class="stat-box">
+<h3>{{ total_saved }}</h3>
+<p>Saved Jobs</p>
+</div>
+
+</div>
+
+<!-- Info -->
+<div class="info">
+
+<p><b>Role:</b> Job Seeker</p>
+<p><b>Skills:</b> Python, HTML, CSS</p>
+<p><b>Education:</b> BCA</p>
+<p><b>Experience:</b> Fresher</p>
+
+</div>
+
+<button class="edit-btn">Edit Profile</button>
+
+</div>
+
+</body>
+</html>

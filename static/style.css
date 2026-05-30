@@ -1,0 +1,9 @@
+.job-card:hover{
+    transform:scale(1.02);
+    transition:0.2s;
+}
+
+input[type="file"]{
+    margin-top:10px;
+    margin-right:20px;
+}

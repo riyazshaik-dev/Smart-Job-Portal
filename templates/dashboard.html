@@ -1,0 +1,133 @@
+<!DOCTYPE html>
+<html>
+<head>
+<title>Dashboard - Smart Job Portal</title>
+
+<style>
+
+body{
+    font-family: Arial;
+    background:#f4f6f8;
+    margin:0;
+}
+
+/* Navbar */
+
+.navbar{
+    background:#333;
+    padding:15px;
+    text-align:center;
+}
+
+.navbar a{
+    color:white;
+    margin:15px;
+    text-decoration:none;
+    font-size:16px;
+}
+
+.navbar a:hover{
+    color:#4CAF50;
+}
+
+/* Title */
+
+h1{
+    text-align:center;
+    margin-top:40px;
+}
+
+/* Card */
+
+.dashboard-card{
+    width:600px;
+    margin:40px auto;
+    background:white;
+    padding:30px;
+    border-radius:12px;
+    box-shadow:0px 5px 15px rgba(0,0,0,0.1);
+}
+
+/* Form Inputs */
+
+.dashboard-card input,
+.dashboard-card textarea,
+.dashboard-card select{
+    width:100%;
+    padding:12px;
+    margin-top:12px;
+    border:1px solid #ccc;
+    border-radius:6px;
+    font-size:14px;
+}
+
+/* Button */
+
+.dashboard-card button{
+    margin-top:20px;
+    width:100%;
+    padding:12px;
+    background:#007bff;
+    color:white;
+    border:none;
+    border-radius:6px;
+    cursor:pointer;
+    font-size:16px;
+}
+
+.dashboard-card button:hover{
+    background:#0056b3;
+}
+
+</style>
+
+</head>
+
+<body>
+
+<!-- Navbar -->
+
+<div class="navbar">
+<a href="/">Home</a>
+<a href="/jobs">Jobs</a>
+<a href="/saved_jobs">Saved Jobs</a>
+<a href="/dashboard">Dashboard</a>
+<a href="/profile">Profile</a>
+<a href="/my_applications">My Applications</a>
+<a href="/admin">Admin</a>
+<a href="/logout">Logout</a>
+</div>
+
+<h1>Dashboard</h1>
+
+<div class="dashboard-card">
+
+<h2>Post Job</h2>
+
+<form action="/post_job" method="POST">
+
+<input type="text" name="title" placeholder="Job Title" required>
+
+<input type="text" name="company" placeholder="Company Name" required>
+
+<input type="text" name="location" placeholder="Job Location">
+
+<input type="text" name="salary" placeholder="Salary (Example: 6 LPA)">
+
+<select name="category">
+<option value="IT">IT</option>
+<option value="Developer">Developer</option>
+<option value="Designer">Designer</option>
+<option value="Marketing">Marketing</option>
+</select>
+
+<textarea name="description" placeholder="Job Description"></textarea>
+
+<button type="submit">Post Job</button>
+
+</form>
+
+</div>
+
+</body>
+</html>
