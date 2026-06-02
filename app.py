@@ -169,33 +169,53 @@ def jobs():
 @app.route("/saved_jobs")
 def saved_jobs():
 
+    if "user_id" not in session:
+        flash("Please login first!")
+        return redirect("/login")
+
     conn = get_db()
 
     jobs = conn.execute("""
-        SELECT jobs.id, jobs.title, jobs.company
+        SELECT jobs.id,
+               jobs.title,
+               jobs.company
         FROM saved_jobs
         JOIN jobs ON jobs.id = saved_jobs.job_id
-    """).fetchall()
+        WHERE saved_jobs.user_id=?
+    """, (session["user_id"],)).fetchall()
 
     return render_template("saved_jobs.html", jobs=jobs)
 
 @app.route("/save_job/<int:id>")
 def save_job(id):
 
+    if "user_id" not in session:
+        flash("Please login first!")
+        return redirect("/login")
+
     conn = get_db()
 
-    conn.execute(
-        "INSERT INTO saved_jobs (job_id) VALUES (?)",
-        (id,)
-    )
+    existing = conn.execute(
+        "SELECT * FROM saved_jobs WHERE job_id=? AND user_id=?",
+        (id, session["user_id"])
+    ).fetchone()
 
-    conn.commit()
+    if existing:
+        flash("Job already saved!")
 
-    flash("Job saved successfully!")
+    else:
+        conn.execute(
+            "INSERT INTO saved_jobs (job_id,user_id) VALUES (?,?)",
+            (id, session["user_id"])
+        )
 
-    return redirect("/jobs")
+        conn.commit()
 
-# Job details
+        flash("Job saved successfully!")
+
+    return redirect("/jobs")# Job details
+
+
 @app.route("/job/<int:id>")
 def job_detail(id):
 
@@ -230,17 +250,26 @@ def admin():
 @app.route("/my_applications")
 def my_applications():
 
+    if "user_id" not in session:
+        flash("Please login first!")
+        return redirect("/login")
+
     conn = get_db()
 
     applications = conn.execute("""
-    SELECT jobs.title, jobs.company, applications.resume, applications.status
-    FROM applications
-    JOIN jobs ON jobs.id = applications.job_id
-    WHERE applications.user_id=?
-""", (session["user_id"],)).fetchall()
+        SELECT jobs.title,
+               jobs.company,
+               applications.resume,
+               applications.status
+        FROM applications
+        JOIN jobs ON jobs.id = applications.job_id
+        WHERE applications.user_id=?
+    """, (session["user_id"],)).fetchall()
 
-    return render_template("my_applications.html", applications=applications)
-
+    return render_template(
+        "my_applications.html",
+        applications=applications
+    )
 
 # Uploads
 @app.route("/uploads/<filename>")
@@ -249,8 +278,12 @@ def uploaded_file(filename):
 # Logout
 @app.route("/logout")
 def logout():
-    return redirect("/")
 
+    session.clear()
+
+    flash("Logged out successfully!")
+
+    return redirect("/")
 
 # Post job
 @app.route("/post_job", methods=["POST"])
