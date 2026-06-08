@@ -1,93 +1,155 @@
 <!DOCTYPE html>
-<html>
+
+<html lang="en">
 <head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+
 <title>My Applications</title>
+
+<link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&display=swap" rel="stylesheet">
 
 <style>
 
+*{
+margin:0;
+padding:0;
+box-sizing:border-box;
+font-family:'Poppins',sans-serif;
+}
+
 body{
-    font-family: Arial;
-    background:#f4f6f8;
-    margin:0;
+background:#f4f7fc;
 }
 
 /* Navbar */
+
 .navbar{
-    background:#333;
-    padding:15px;
-    text-align:center;
+background:#0f172a;
+padding:18px;
+text-align:center;
 }
 
 .navbar a{
-    color:white;
-    margin:15px;
-    text-decoration:none;
-    font-weight:bold;
+color:white;
+text-decoration:none;
+margin:15px;
+font-weight:600;
 }
 
 .navbar a:hover{
-    color:#4CAF50;
+color:#60a5fa;
 }
 
-/* Title */
-h1{
-    text-align:center;
-    margin-top:40px;
+/* Hero */
+
+.hero{
+background:linear-gradient(135deg,#2563eb,#1d4ed8);
+color:white;
+text-align:center;
+padding:60px 20px;
 }
 
-/* Table container */
-.table-box{
-    width:70%;
-    margin:40px auto;
-    background:white;
-    padding:25px;
-    border-radius:12px;
-    box-shadow:0px 5px 15px rgba(0,0,0,0.1);
+.hero h1{
+font-size:42px;
+margin-bottom:10px;
 }
 
-/* Table */
-table{
-    width:100%;
-    border-collapse:collapse;
+.hero p{
+opacity:.9;
 }
 
-/* Header */
-th{
-    background:#007bff;
-    color:white;
+/* Container */
+
+.container{
+width:90%;
+max-width:1000px;
+margin:40px auto;
 }
 
-/* Table cells */
-th,td{
-    padding:12px;
-    text-align:center;
-    border-bottom:1px solid #ddd;
+/* Application Card */
+
+.app-card{
+background:white;
+padding:25px;
+margin-bottom:20px;
+border-radius:18px;
+box-shadow:0 10px 25px rgba(0,0,0,.08);
+transition:.3s;
 }
 
-/* Row hover */
-tr:hover{
-    background:#f2f2f2;
+.app-card:hover{
+transform:translateY(-4px);
+}
+
+.job-title{
+font-size:24px;
+font-weight:700;
+color:#0f172a;
+}
+
+.company{
+color:#64748b;
+margin-top:5px;
+}
+
+.details{
+display:flex;
+justify-content:space-between;
+align-items:center;
+margin-top:20px;
+flex-wrap:wrap;
+gap:10px;
+}
+
+/* Status */
+
+.status{
+padding:8px 15px;
+border-radius:25px;
+font-size:13px;
+font-weight:600;
+}
+
+.pending{
+background:#fef3c7;
+color:#92400e;
+}
+
+.accepted{
+background:#dcfce7;
+color:#166534;
+}
+
+.rejected{
+background:#fee2e2;
+color:#991b1b;
 }
 
 /* Resume Button */
+
 .resume-btn{
-    background:#28a745;
-    color:white;
-    padding:6px 12px;
-    border-radius:5px;
-    text-decoration:none;
-    font-size:14px;
+background:#2563eb;
+color:white;
+padding:10px 18px;
+border-radius:10px;
+text-decoration:none;
+font-weight:600;
 }
 
 .resume-btn:hover{
-    background:#1e7e34;
+background:#1d4ed8;
 }
 
-/* No data message */
+/* Empty */
+
 .empty{
-    text-align:center;
-    padding:20px;
-    color:gray;
+text-align:center;
+background:white;
+padding:40px;
+border-radius:18px;
+box-shadow:0 10px 25px rgba(0,0,0,.08);
+color:#64748b;
 }
 
 </style>
@@ -100,52 +162,61 @@ tr:hover{
 <a href="/">Home</a>
 <a href="/jobs">Jobs</a>
 <a href="/saved_jobs">Saved Jobs</a>
-<a href="/dashboard">Dashboard</a>
 <a href="/profile">Profile</a>
-<a href="/my_applications">My Applications</a>
-<a href="/admin">Admin</a>
+<a href="/my_applications">Applications</a>
 <a href="/logout">Logout</a>
 </div>
 
-<h1>My Applied Jobs</h1>
+<div class="hero">
+<h1>My Applications</h1>
+<p>Track all your job applications in one place</p>
+</div>
 
-<div class="table-box">
-
-<table>
-
-<tr>
-<th>Job Title</th>
-<th>Company</th>
-<th>Resume</th>
-</tr>
+<div class="container">
 
 {% if applications|length == 0 %}
 
-<tr>
-<td colspan="3" class="empty">You have not applied for any jobs yet.</td>
-</tr>
+<div class="empty">
+<h2>No Applications Yet</h2>
+<p>Start applying for jobs to see them here.</p>
+</div>
 
 {% endif %}
 
 {% for app in applications %}
 
-<tr>
+<div class="app-card">
 
-<td>{{ app[0] }}</td>
+<div class="job-title">
+{{ app[0] }}
+</div>
 
-<td>{{ app[1] }}</td>
+<div class="company">
+🏢 {{ app[1] }}
+</div>
 
-<td>
-<a class="resume-btn" href="/uploads/{{ app[2] }}" download>
-Download Resume
+<div class="details">
+
+<div>
+{% if app[3] == "accepted" %}
+<span class="status accepted">Accepted</span>
+
+{% elif app[3] == "rejected" %} <span class="status rejected">Rejected</span>
+
+{% else %} <span class="status pending">Pending</span>
+{% endif %}
+
+</div>
+
+<a href="/uploads/{{ app[2] }}" class="resume-btn" download>
+📄 Resume
 </a>
-</td>
 
-</tr>
+</div>
+
+</div>
 
 {% endfor %}
-
-</table>
 
 </div>
 

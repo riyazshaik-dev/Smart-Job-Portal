@@ -1,67 +1,168 @@
 <!DOCTYPE html>
-<html>
+
+<html lang="en">
 <head>
-<title>Login - Smart Job Portal</title>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+<title>Login | Smart Job Portal</title>
+
+<link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&display=swap" rel="stylesheet">
 
 <style>
 
-body{
-    font-family: Arial;
-    background:#f4f6f8;
+*{
     margin:0;
+    padding:0;
+    box-sizing:border-box;
+    font-family:'Poppins',sans-serif;
 }
 
-/* Navbar */
-.navbar{
-    background:#333;
-    padding:15px;
-    text-align:center;
+body{
+    min-height:100vh;
+    background:linear-gradient(135deg,#dff7f4,#f8fafc);
+    display:flex;
+    justify-content:center;
+    align-items:center;
+    padding:20px;
 }
 
-.navbar a{
-    color:white;
-    margin:15px;
-    text-decoration:none;
-    font-size:16px;
-}
+/* Main Container */
 
-/* Title */
-h1{
-    text-align:center;
-    margin-top:40px;
-}
-
-/* Card */
-.login-card{
+.container{
+    width:100%;
+    max-width:1100px;
     background:white;
-    width:350px;
-    margin:40px auto;
-    padding:30px;
+    border-radius:25px;
+    overflow:hidden;
+    display:flex;
+    box-shadow:0 20px 50px rgba(0,0,0,.1);
+}
+
+/* Left Side */
+
+.left{
+    flex:1;
+    padding:60px;
+    display:flex;
+    flex-direction:column;
+    justify-content:center;
+}
+
+.logo{
+    font-size:30px;
+    font-weight:700;
+    color:#2563eb;
+    margin-bottom:10px;
+}
+
+.subtitle{
+    color:#64748b;
+    margin-bottom:35px;
+}
+
+.flash{
+    background:#ef4444;
+    color:white;
+    padding:12px;
     border-radius:10px;
-    box-shadow:0px 0px 10px rgba(0,0,0,0.1);
-    text-align:center;
+    margin-bottom:15px;
+}
+
+/* Form */
+
+form{
+    display:flex;
+    flex-direction:column;
+    gap:15px;
 }
 
 input{
-    width:90%;
-    padding:10px;
-    margin:10px 0;
-    border:1px solid #ccc;
-    border-radius:5px;
+    padding:15px;
+    border:1px solid #dbeafe;
+    border-radius:12px;
+    outline:none;
+    font-size:15px;
 }
 
-/* Button */
+input:focus{
+    border-color:#2563eb;
+}
+
 button{
-    padding:10px 20px;
-    background:#007bff;
+    background:#2563eb;
     color:white;
     border:none;
-    border-radius:5px;
+    padding:15px;
+    border-radius:12px;
     cursor:pointer;
+    font-size:16px;
+    font-weight:600;
+    transition:.3s;
 }
 
 button:hover{
-    background:#0056b3;
+    background:#1d4ed8;
+}
+
+.register-link{
+    margin-top:20px;
+    text-align:center;
+}
+
+.register-link a{
+    color:#2563eb;
+    text-decoration:none;
+    font-weight:600;
+}
+
+/* Right Side */
+
+.right{
+    flex:1;
+    background:linear-gradient(135deg,#60a5fa,#2563eb);
+    display:flex;
+    justify-content:center;
+    align-items:center;
+    padding:40px;
+}
+
+.right-content{
+    text-align:center;
+    color:white;
+}
+
+.emoji{
+    font-size:120px;
+    margin-bottom:20px;
+}
+
+.right-content h2{
+    font-size:36px;
+    margin-bottom:15px;
+}
+
+.right-content p{
+    line-height:1.7;
+    font-size:17px;
+}
+
+/* Mobile */
+
+@media(max-width:768px){
+
+.container{
+    flex-direction:column;
+}
+
+.right{
+    display:none;
+}
+
+.left{
+    padding:35px;
+}
+
 }
 
 </style>
@@ -70,53 +171,73 @@ button:hover{
 
 <body>
 
-<div class="navbar">
-<a href="/">Home</a>
-<a href="/jobs">Jobs</a>
-<a href="/saved_jobs">Saved Jobs</a>
-<a href="/dashboard">Dashboard</a>
-<a href="/profile">Profile</a>
-<a href="/my_applications">My Applications</a>
-<a href="/admin">Admin</a>
-<a href="/logout">Logout</a>
+<div class="container">
+
+<div class="left">
+
+<div class="logo">
+Smart Job Portal
 </div>
 
-<h1>Login</h1>
+<p class="subtitle">
+Welcome back. Login and continue your career journey.
+</p>
 
-<div class="login-card">
-
-<!-- 🔥 Flash message (IMPORTANT) -->
 {% with messages = get_flashed_messages() %}
 {% if messages %}
-<p style="color:red;">{{ messages[0] }}</p>
+
+<div class="flash">
+{{ messages[0] }}
+</div>
 {% endif %}
 {% endwith %}
 
-<!-- 🔥 autocomplete OFF added -->
 <form method="POST" autocomplete="off">
 
-<input type="email"
-       name="email"
-       placeholder="Enter Email"
-       required
-       autocomplete="off"
-       pattern="[a-z0-9._%+-]+@[a-z0-9.-]+\.[a-z]{2,}$"
-       title="Enter valid email like example@gmail.com">
+<input
+type="email"
+name="email"
+placeholder="Email Address"
+required
+autocomplete="off">
 
-<input type="password"
-       name="password"
-       placeholder="Enter Password"
-       required
-       autocomplete="new-password">
+<input
+type="password"
+name="password"
+placeholder="Password"
+required
+autocomplete="new-password">
 
-<button type="submit">Login</button>
+<button type="submit">
+Login
+</button>
 
 </form>
 
-<!-- 🔥 Register link -->
-<p style="margin-top:10px;">
-Don't have an account? <a href="/register">Register</a>
+<div class="register-link">
+Don't have an account?
+<a href="/register">Create Account</a>
+</div>
+
+</div>
+
+<div class="right">
+
+<div class="right-content">
+
+<div class="emoji">💼</div>
+
+<h2>Find Your Dream Job</h2>
+
+<p>
+Apply for jobs, save opportunities,
+track applications and build your career
+with Smart Job Portal.
 </p>
+
+</div>
+
+</div>
 
 </div>
 

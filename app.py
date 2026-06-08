@@ -215,6 +215,26 @@ def save_job(id):
 
     return redirect("/jobs")# Job details
 
+@app.route("/unsave_job/<int:id>")
+def unsave_job(id):
+
+    if "user_id" not in session:
+        flash("Please login first!")
+        return redirect("/login")
+
+    conn = get_db()
+
+    conn.execute(
+        "DELETE FROM saved_jobs WHERE job_id=? AND user_id=?",
+        (id, session["user_id"])
+    )
+
+    conn.commit()
+
+    flash("Job removed from saved jobs!")
+
+    return redirect("/saved_jobs")
+
 
 @app.route("/job/<int:id>")
 def job_detail(id):
@@ -281,7 +301,7 @@ def logout():
 
     session.clear()
 
-    flash("Logged out successfully!")
+    flash("You have been logged out successfully. See you again!")
 
     return redirect("/")
 
@@ -378,6 +398,5 @@ def apply(job_id):
     return redirect("/jobs")
 
 import os
-
 if __name__ == "__main__":
-    app.run(host="0.0.0.0", port=int(os.environ.get("PORT", 5000)))
+    app.run(debug=True)
