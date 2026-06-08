@@ -154,6 +154,14 @@ margin-top:50px;
 color:#64748b;
 }
 
+.delete-btn{
+background:#ef4444;
+}
+
+.delete-btn:hover{
+background:#dc2626;
+}
+
 </style>
 
 </head>
@@ -204,6 +212,18 @@ No jobs available
 🏢 {{ job[2] }}
 </div>
 
+<div class="company">
+📍 {{ job[5] }}
+</div>
+
+<div class="company">
+💰 {{ job[6] }}
+</div>
+
+<div class="company">
+🕒 {{ job[7] }}
+</div>
+
 <div class="category">
 {{ job[3] }}
 </div>
@@ -221,6 +241,14 @@ View Details
 <a href="/save_job/{{ job[0] }}" class="btn save-btn">
 Save Job
 </a>
+
+{% if session.get("is_admin") %}
+
+<a href="/delete_job/{{ job[0] }}" class="btn delete-btn">
+Delete
+</a>
+
+{% endif %}
 
 </div>
 

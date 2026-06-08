@@ -232,11 +232,21 @@ required>
 
 <input type="text"
 name="location"
-placeholder="Job Location">
+placeholder="Job Location (Example: Hyderabad)"
+required>
 
 <input type="text"
 name="salary"
-placeholder="Salary (Example: 8 LPA)">
+placeholder="Salary (Example: ₹6 LPA - ₹10 LPA)"
+required>
+
+<select name="job_type" required>
+<option value="">Select Job Type</option>
+<option value="Full Time">Full Time</option>
+<option value="Remote">Remote</option>
+<option value="Hybrid">Hybrid</option>
+<option value="Internship">Internship</option>
+</select>
 
 <select name="category">
 
@@ -246,6 +256,18 @@ placeholder="Salary (Example: 8 LPA)">
 <option value="Marketing">Marketing</option>
 
 </select>
+
+<textarea
+name="description"
+placeholder="Describe job responsibilities, requirements and benefits"
+required>
+</textarea>
+
+<button type="submit">
+🚀 Publish Job
+</button>
+
+</form>
 
 <textarea
 name="description"

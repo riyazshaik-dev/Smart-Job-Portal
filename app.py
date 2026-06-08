@@ -76,7 +76,6 @@ def register():
     return render_template("register.html")
 
 
-# Login page
 @app.route("/login", methods=["GET","POST"])
 def login():
 
@@ -93,8 +92,15 @@ def login():
         ).fetchone()
 
         if user:
-            session["user_id"] = user[0]   # ⭐ important
+
+            session["user_id"] = user[0]
             session["user_name"] = user[1]
+
+            # Admin Check
+            if email == "riyazs@gmail.com":
+                session["is_admin"] = True
+            else:
+                session["is_admin"] = False
 
             flash("Login successful!")
             return redirect("/jobs")
@@ -313,27 +319,52 @@ def post_job():
     company = request.form["company"]
     location = request.form["location"]
     salary = request.form["salary"]
+    job_type = request.form["job_type"]   # NEW
     category = request.form["category"]
     description = request.form.get("description", "")
 
     conn = get_db()
 
     conn.execute(
-        "INSERT INTO jobs (title,company,category,description,location,salary) VALUES (?,?,?,?,?,?)",
-        (title, company, category, description, location, salary)
+        """
+        INSERT INTO jobs
+        (title, company, category, description, location, salary, job_type)
+        VALUES (?, ?, ?, ?, ?, ?, ?)
+        """,
+        (
+            title,
+            company,
+            category,
+            description,
+            location,
+            salary,
+            job_type
+        )
     )
 
     conn.commit()
 
+    flash("Job posted successfully!")
+
     return redirect("/jobs")
 
-# Delete job
 @app.route("/delete_job/<int:id>")
 def delete_job(id):
 
+    if not session.get("is_admin"):
+        flash("Only admin can delete jobs!")
+        return redirect("/jobs")
+
     conn = get_db()
-    conn.execute("DELETE FROM jobs WHERE id=?", (id,))
+
+    conn.execute(
+        "DELETE FROM jobs WHERE id=?",
+        (id,)
+    )
+
     conn.commit()
+
+    flash("Job deleted successfully!")
 
     return redirect("/jobs")
 
